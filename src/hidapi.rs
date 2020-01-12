@@ -179,7 +179,6 @@ impl Iterator for DeviceInfos {
 
 impl Drop for DeviceInfos {
     fn drop(&mut self) {
-        println!("foo");
         unsafe {
             hid_free_enumeration(self.head);
         }
