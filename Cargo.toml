@@ -1,0 +1,11 @@
+[package]
+name = "co2mini-to-redis"
+version = "0.1.0"
+authors = ["bernd.vogt@sourcepit.org"]
+
+[dependencies]
+common_failures = "0.1.1"
+failure = "0.1.6"
+hidapi-sys = "0.1.4"
+widestring = "0.4.0"
+redis = "0.14.0"
