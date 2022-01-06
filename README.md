@@ -8,8 +8,7 @@ See https://github.com/japaric/rust-cross#tldr-ubuntu-example
 
 For sake of easiness we use Ubuntus Multiarch features to install required pre-compiled libs.
 
-- udev
-- hidapi-libusb
+- libusb-1.0-0-dev
 
 ### Prepare APT
 
@@ -36,5 +35,5 @@ See https://wiki.debian.org/Multiarch/HOWTO.
 
 ```
 sudo apt-get update
-sudo apt-get install libudev-dev:armhf libhidapi-dev:armhf
+sudo apt-get install libusb-1.0-0-dev:armhf
 ```

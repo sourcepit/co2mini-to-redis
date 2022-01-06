@@ -1,7 +1,7 @@
 use common_failures::prelude::*;
 
-use hidapi::Device;
-use hidapi::DeviceInfos;
+use hidapi::HidApi;
+use hidapi::HidDevice;
 
 const VENDOR_ID: u16 = 0x4d9;
 const PRODUCT_ID: u16 = 0xa052;
@@ -44,23 +44,14 @@ pub enum Value {
 }
 
 pub struct Co2Mini {
-    device: Device,
+    device: HidDevice,
 }
 
 impl Co2Mini {
     pub fn open() -> Result<Co2Mini> {
-        let mut device_infos = DeviceInfos::new(Some(VENDOR_ID), Some(PRODUCT_ID));
-        let device_info = match device_infos.next() {
-            Some(device_info) => device_info,
-            None => {
-                return Err(format_err!(
-                    "Device with vendor if {:x} and product id {:x} not found",
-                    VENDOR_ID,
-                    PRODUCT_ID
-                ))
-            }
-        };
-        let device = Device::open_path(&device_info.path)?;
+        let hidapi = HidApi::new()?;
+
+        let device = hidapi.open(VENDOR_ID, PRODUCT_ID)?;
 
         device.send_feature_report(&SALT)?;
 

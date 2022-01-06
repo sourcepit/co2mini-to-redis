@@ -4,14 +4,12 @@ extern crate clap;
 extern crate common_failures;
 #[macro_use]
 extern crate failure;
-extern crate hidapi_sys;
+extern crate hidapi;
 #[macro_use]
 extern crate log;
 extern crate redis;
-extern crate widestring;
 
 mod co2mini;
-mod hidapi;
 
 use common_failures::prelude::*;
 

@@ -17,7 +17,7 @@
 		<cargo.clap.version>"=2.33.0"</cargo.clap.version>
 		<cargo.common_failures.version>"=0.1.1"</cargo.common_failures.version>
 		<cargo.failure.version>"=0.1.6"</cargo.failure.version>
-		<cargo.hidapi-sys.version>"=0.1.4"</cargo.hidapi-sys.version>
+		<cargo.hidapi.version>"=1.3.2"</cargo.hidapi.version>
 		<cargo.redis.version>"=0.15.1"</cargo.redis.version>
 		<cargo.log.version>"=0.4.8"</cargo.log.version>
 		<cargo.stderrlog.version>"=0.4.3"</cargo.stderrlog.version>
