@@ -2,7 +2,6 @@
 extern crate clap;
 #[macro_use]
 extern crate common_failures;
-#[macro_use]
 extern crate failure;
 extern crate hidapi;
 #[macro_use]
