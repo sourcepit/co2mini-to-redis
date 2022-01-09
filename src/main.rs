@@ -24,6 +24,12 @@ struct Args {
 
     #[clap(short, long)]
     quiet: bool,
+
+    #[clap(long, default_value = "localhost")]
+    pub redis_host: String,
+
+    #[clap(long, default_value_t = 6379)]
+    pub redis_port: usize,
 }
 
 fn run() -> Result<()> {
@@ -36,7 +42,9 @@ fn run() -> Result<()> {
         .quiet(args.quiet)
         .init()?;
 
-    let mut redis = redis::Client::open("redis://127.0.0.1/")?.get_connection()?;
+    let mut redis =
+        redis::Client::open(format!("redis://{}:{}", args.redis_host, args.redis_port))?
+            .get_connection()?;
 
     let co2mini = Co2Mini::open()?;
     loop {
