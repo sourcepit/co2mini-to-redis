@@ -1,4 +1,3 @@
-#[macro_use]
 extern crate clap;
 #[macro_use]
 extern crate common_failures;
@@ -12,45 +11,29 @@ mod co2mini;
 
 use common_failures::prelude::*;
 
-use clap::App;
-use clap::Arg;
+use clap::Parser;
 use co2mini::Co2Mini;
 use co2mini::Value;
 use redis::Commands;
 
-const ARG_VERBOSITY: &str = "verbosity";
-const ARG_QUIET: &str = "quiet";
+#[derive(Parser, Debug)]
+#[clap(about, version, author)]
+struct Args {
+    #[clap(short, parse(from_occurrences))]
+    verbosity: usize,
+
+    #[clap(short, long)]
+    quiet: bool,
+}
 
 fn run() -> Result<()> {
-    let args = App::new(crate_name!())
-        .version(crate_version!())
-        .author(crate_authors!())
-        .arg(
-            Arg::with_name(ARG_VERBOSITY)
-                .long(ARG_VERBOSITY)
-                .short("v")
-                .multiple(true)
-                .takes_value(false)
-                .required(false),
-        )
-        .arg(
-            Arg::with_name(ARG_QUIET)
-                .long(ARG_QUIET)
-                .short("q")
-                .multiple(false)
-                .takes_value(false)
-                .required(false),
-        )
-        .get_matches();
-
-    let verbosity = args.occurrences_of(ARG_VERBOSITY) as usize + 1;
-    let quiet = args.is_present(ARG_QUIET);
+    let args = Args::parse();
 
     stderrlog::new()
         .module(module_path!())
         .timestamp(stderrlog::Timestamp::Second)
-        .verbosity(verbosity)
-        .quiet(quiet)
+        .verbosity(args.verbosity + 1)
+        .quiet(args.quiet)
         .init()?;
 
     let mut redis = redis::Client::open("redis://127.0.0.1/")?.get_connection()?;
