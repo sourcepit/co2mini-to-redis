@@ -19,7 +19,7 @@ SERVICE_FILE_NAME="$SERVICE_NAME.service"
 SERVICE_FILE="$SERVICE_DIR/$SERVICE_FILE_NAME"
 
 CONF="$(cat <<-EOF
-	ARGS="-vvv"
+	ARGS="-v --redis-target stream --redis-stream-max-length 129600"
 EOF
 )"
 
@@ -64,9 +64,7 @@ ssh $TARGET_HOST -T /bin/bash << EOF
 	# deploy configuration
 	mkdir -p $CONF_DIR
 	echo "$CONF_FILE"
-	if [[ ! -f "$CONF_FILE" ]]; then
-		echo "$CONF" > $CONF_FILE
-	fi
+	echo "$CONF" > $CONF_FILE
 
 	# deploy service
 	echo "$SERVICE_FILE"
